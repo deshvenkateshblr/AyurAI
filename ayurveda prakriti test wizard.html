@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prakriti Assessment Wizard</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f4f6f9; color: #2c3e50; }
+    header { background: linear-gradient(90deg, #3498db, #2ecc71); color: #fff; padding: 25px; text-align: center; }
+    .container { max-width: 800px; margin: 30px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .question { border: 2px solid #3498db; border-radius: 8px; padding: 20px; margin-bottom: 20px; background: #ecf6fc; }
+    .question p { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
+    label { display: block; margin: 10px 0; font-size: 1em; }
+    button { padding: 10px 20px; margin-top: 20px; background: #3498db; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 1em; }
+    button:hover { background: #2980b9; }
+    .progress { background: #ddd; border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
+    .progress-bar { height: 20px; background: #27ae60; width: 0%; transition: width 0.3s; }
+    .result { font-weight: bold; margin-top: 30px; font-size: 1.2em; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Prakriti Assessment Wizard</h1>
+    <p>Discover your Ayurvedic constitution step by step</p>
+  </header>
+
+  <div class="container">
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <form id="prakritiForm">
+
+      <!-- Q1 -->
+      <div class="question" id="q1" data-weight="2" style="display:block;">
+        <p>1. How would you describe your body frame?</p>
+        <label><input type="radio" name="q1" value="Vata"> My body frame is thin and light, and I often appear delicate.</label>
+        <label><input type="radio" name="q1" value="Pitta"> My body frame is medium and muscular, with good strength.</label>
+        <label><input type="radio" name="q1" value="Kapha"> My body frame is broad and heavy, giving me a solid appearance.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question" id="q2" data-weight="1" style="display:none;">
+        <p>2. How would you describe your skin type?</p>
+        <label><input type="radio" name="q2" value="Vata"> My skin is dry and rough, and it tends to chap easily.</label>
+        <label><input type="radio" name="q2" value="Pitta"> My skin feels warm and often looks reddish or flushed.</label>
+        <label><input type="radio" name="q2" value="Kapha"> My skin is smooth, soft, and often oily.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question" id="q3" data-weight="1" style="display:none;">
+        <p>3. How would you describe your hair texture?</p>
+        <label><input type="radio" name="q3" value="Vata"> My hair is dry, frizzy, and prone to split ends.</label>
+        <label><input type="radio" name="q3" value="Pitta"> My hair is fine and tends to grey or thin early.</label>
+        <label><input type="radio" name="q3" value="Kapha"> My hair is thick, oily, and lustrous.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question" id="q4" data-weight="1" style="display:none;">
+        <p>4. How would you describe your eyes?</p>
+        <label><input type="radio" name="q4" value="Vata"> My eyes are small and restless, moving quickly.</label>
+        <label><input type="radio" name="q4" value="Pitta"> My eyes are sharp and penetrating, with an intense gaze.</label>
+        <label><input type="radio" name="q4" value="Kapha"> My eyes are large, calm, and soothing to look at.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question" id="q5" data-weight="1" style="display:none;">
+        <p>5. How would you describe your teeth?</p>
+        <label><input type="radio" name="q5" value="Vata"> My teeth are irregular or protruding, and sometimes brittle.</label>
+        <label><input type="radio" name="q5" value="Pitta"> My teeth are medium‑sized and prone to sensitivity.</label>
+        <label><input type="radio" name="q5" value="Kapha"> My teeth are strong, well‑formed, and durable.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question" id="q6" data-weight="3" style="display:none;">
+        <p>6. How would you describe your appetite?</p>
+        <label><input type="radio" name="q6" value="Vata"> My appetite is irregular and varies from day to day.</label>
+        <label><input type="radio" name="q6" value="Pitta"> My appetite is strong and I feel hungry often.</label>
+        <label><input type="radio" name="q6" value="Kapha"> My appetite is slow and steady, without sudden cravings.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question" id="q7" data-weight="3" style="display:none;">
+        <p>7. How would you describe your digestion?</p>
+        <label><input type="radio" name="q7" value="Vata"> My digestion is variable, and I often experience gas or bloating.</label>
+        <label><input type="radio" name="q7" value="Pitta"> My digestion is quick, but I am prone to acidity or heartburn.</label>
+        <label><input type="radio" name="q7" value="Kapha"> My digestion is slow and tends to feel sluggish.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question" id="q8" data-weight="3" style="display:none;">
+        <p>8. How would you describe your sleep?</p>
+        <label><input type="radio" name="q8" value="Vata"> My sleep is light and often interrupted.</label>
+        <label><input type="radio" name="q8" value="Pitta"> My sleep is moderate and usually sufficient.</label>
+        <label><input type="radio" name="q8" value="Kapha"> My sleep is deep and long, and I find it hard to wake up.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q9 -->
+      <div class="question" id="q9" data-weight="2" style="display:none;">
+        <p>9. How would you describe your energy levels?</p>
+        <label><input type="radio" name="q9" value="Vata"> My energy comes in bursts and is often inconsistent.</label>
+        <label><input type="radio" name="q9" value="Pitta"> My energy is consistent and I stay driven throughout the day.</label>
+        <label><input type="radio" name="q9" value="Kapha"> My energy is steady and enduring, though not very fast.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+        <!-- Q10 -->
+      <div class="question" id="q10" data-weight="2" style="display:none;">
+        <p>10. Which climate do you feel most comfortable in?</p>
+        <label><input type="radio" name="q10" value="Vata"> I feel best in warm climates and dislike cold weather.</label>
+        <label><input type="radio" name="q10" value="Pitta"> I feel best in cooler climates and dislike excessive heat.</label>
+        <label><input type="radio" name="q10" value="Kapha"> I feel best in dry warmth and dislike damp or humid weather.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q11 -->
+      <div class="question" id="q11" data-weight="2" style="display:none;">
+        <p>11. How would you describe your temperament?</p>
+        <label><input type="radio" name="q11" value="Vata"> I am creative and restless, often full of new ideas.</label>
+        <label><input type="radio" name="q11" value="Pitta"> I am ambitious and decisive, with a strong drive to succeed.</label>
+        <label><input type="radio" name="q11" value="Kapha"> I am calm and steady, preferring stability and peace.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q12 -->
+      <div class="question" id="q12" data-weight="2" style="display:none;">
+        <p>12. How would you describe your memory?</p>
+        <label><input type="radio" name="q12" value="Vata"> I learn quickly but also forget quickly.</label>
+        <label><input type="radio" name="q12" value="Pitta"> I have a sharp and precise memory.</label>
+        <label><input type="radio" name="q12" value="Kapha"> I learn slowly but retain information for a long time.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q13 -->
+      <div class="question" id="q13" data-weight="1" style="display:none;">
+        <p>13. How would you describe your speech?</p>
+        <label><input type="radio" name="q13" value="Vata"> My speech is fast, irregular, and sometimes unclear.</label>
+        <label><input type="radio" name="q13" value="Pitta"> My speech is clear, sharp, and to the point.</label>
+        <label><input type="radio" name="q13" value="Kapha"> My speech is slow, melodious, and soothing.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q14 -->
+      <div class="question" id="q14" data-weight="3" style="display:none;">
+        <p>14. How do you usually respond emotionally?</p>
+        <label><input type="radio" name="q14" value="Vata"> I often feel anxious or fearful in new situations.</label>
+        <label><input type="radio" name="q14" value="Pitta"> I often feel angry or irritable when things don’t go my way.</label>
+        <label><input type="radio" name="q14" value="Kapha"> I often feel attached and possessive toward people or things.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q15 -->
+      <div class="question" id="q15" data-weight="2" style="display:none;">
+        <p>15. How do you make decisions?</p>
+        <label><input type="radio" name="q15" value="Vata"> I am indecisive and often change my mind.</label>
+        <label><input type="radio" name="q15" value="Pitta"> I make quick and assertive decisions with confidence.</label>
+        <label><input type="radio" name="q15" value="Kapha"> I take time to decide and prefer caution over speed.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q16 -->
+      <div class="question" id="q16" data-weight="1" style="display:none;">
+        <p>16. How would you describe your walking style?</p>
+        <label><input type="radio" name="q16" value="Vata"> I walk quickly and irregularly, often changing pace.</label>
+        <label><input type="radio" name="q16" value="Pitta"> I walk with determination and purpose, at a steady pace.</label>
+        <label><input type="radio" name="q16" value="Kapha"> I walk slowly and steadily, with a relaxed rhythm.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q17 -->
+      <div class="question" id="q17" data-weight="3" style="display:none;">
+        <p>17. How do you usually react to stress?</p>
+        <label><input type="radio" name="q17" value="Vata"> I worry easily and feel nervous under stress.</label>
+        <label><input type="radio" name="q17" value="Pitta"> I become irritated or frustrated when stressed.</label>
+        <label><input type="radio" name="q17" value="Kapha"> I withdraw and feel lethargic when stressed.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q18 -->
+      <div class="question" id="q18" data-weight="2" style="display:none;">
+        <p>18. How do you respond to cold weather?</p>
+        <label><input type="radio" name="q18" value="Vata"> I am very sensitive to cold and dislike it.</label>
+        <label><input type="radio" name="q18" value="Pitta"> I tolerate cold well and often prefer cooler weather.</label>
+        <label><input type="radio" name="q18" value="Kapha"> I feel comfortable and even enjoy cold weather.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q19 -->
+      <div class="question" id="q19" data-weight="2" style="display:none;">
+        <p>19. How do you respond to hot weather?</p>
+        <label><input type="radio" name="q19" value="Vata"> I tolerate heat fairly well and prefer warmth.</label>
+        <label><input type="radio" name="q19" value="Pitta"> I am very sensitive to heat and dislike hot climates.</label>
+        <label><input type="radio" name="q19" value="Kapha"> I feel comfortable and enjoy warm weather.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q20 -->
+      <div class="question" id="q20" data-weight="2" style="display:none;">
+        <p>20. How would you describe your stamina?</p>
+        <label><input type="radio" name="q20" value="Vata"> My stamina is low and I tire quickly.</label>
+        <label><input type="radio" name="q20" value="Pitta"> My stamina is moderate and I can endure fairly well.</label>
+        <label><input type="radio" name="q20" value="Kapha"> My stamina is high and I can sustain effort for long periods.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+      <!-- Q21 -->
+      <div class="question" id="q21" data-weight="1" style="display:none;">
+        <p>21. How would you describe your creativity?</p>
+        <label><input type="radio" name="q21" value="Vata"> I am highly imaginative and often come up with new ideas spontaneously.</label>
+        <label><input type="radio" name="q21" value="Pitta"> I am practical and goal‑oriented, focusing on useful outcomes.</label>
+        <label><input type="radio" name="q21" value="Kapha"> I am steady and traditional, preferring tried‑and‑true approaches.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q22 -->
+      <div class="question" id="q22" data-weight="1" style="display:none;">
+        <p>22. How do you usually interact socially?</p>
+        <label><input type="radio" name="q22" value="Vata"> I am talkative and excitable, enjoying lively conversations.</label>
+        <label><input type="radio" name="q22" value="Pitta"> I am assertive and persuasive, often taking the lead in discussions.</label>
+        <label><input type="radio" name="q22" value="Kapha"> I am quiet and supportive, preferring to listen more than speak.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q23 -->
+      <div class="question" id="q23" data-weight="1" style="display:none;">
+        <p>23. How would you describe your financial habits?</p>
+        <label><input type="radio" name="q23" value="Vata"> I tend to spend impulsively and don’t always plan ahead.</label>
+        <label><input type="radio" name="q23" value="Pitta"> I invest strategically and think carefully about financial decisions.</label>
+        <label><input type="radio" name="q23" value="Kapha"> I save consistently and prefer financial security over risk.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q24 -->
+      <div class="question" id="q24" data-weight="2" style="display:none;">
+        <p>24. How do you usually respond to conflict?</p>
+        <label><input type="radio" name="q24" value="Vata"> I avoid conflict and feel anxious when it arises.</label>
+        <label><input type="radio" name="q24" value="Pitta"> I confront conflict directly and prefer to resolve it quickly.</label>
+        <label><input type="radio" name="q24" value="Kapha"> I withdraw from conflict and seek peace rather than confrontation.</label>
+        <button type="button" onclick="nextQuestion()">Next</button>
+      </div>
+
+      <!-- Q25 -->
+      <div class="question" id="q25" data-weight="2" style="display:none;">
+        <p>25. How would you describe your overall pace of life?</p>
+        <label><input type="radio" name="q25" value="Vata"> My pace of life is fast and irregular, often changing suddenly.</label>
+        <label><input type="radio" name="q25" value="Pitta"> My pace of life is focused and driven, with clear goals.</label>
+        <label><input type="radio" name="q25" value="Kapha"> My pace of life is slow and steady, preferring consistency.</label>
+        <button type="button" onclick="calculatePrakriti()">Submit</button>
+      </div>
+    </form>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    let currentQuestion = 1;
+    const totalQuestions = 25;
+
+    function nextQuestion() {
+      const currentDiv = document.getElementById('q' + currentQuestion);
+      const radios = document.getElementsByName('q' + currentQuestion);
+      let answered = false;
+      for (let r of radios) { if (r.checked) answered = true; }
+      if (!answered) { alert("Please select an option before proceeding."); return; }
+
+      currentDiv.style.display = 'none';
+      currentQuestion++;
+      if (currentQuestion <= totalQuestions) {
+        document.getElementById('q' + currentQuestion).style.display = 'block';
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const percent = (currentQuestion - 1) / totalQuestions * 100;
+      document.getElementById('progressBar').style.width = percent + '%';
+    }
+
+    function calculatePrakriti() {
+      const form = document.forms['prakritiForm'];
+      let scores = { Vata: 0, Pitta: 0, Kapha: 0 };
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const radios = form['q' + i];
+        if (!radios) continue;
+        for (let r of radios) {
+          if (r.checked) {
+            // Weight mapping: digestion, sleep, appetite, stress, emotions = 3; body frame, energy, temperament, decision-making, stamina, conflict, pace = 2; others = 1
+            let weight = 1;
+            if ([6,7,8,14,17].includes(i)) weight = 3;
+            else if ([1,9,10,11,12,15,20,24,25].includes(i)) weight = 2;
+            scores[r.value] += weight;
+          }
+        }
+      }
+
+      let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      let primary = sorted[0][0];
+      let secondary = sorted[1][0];
+
+      document.querySelector('.container').innerHTML =
+        `<div class="result">Your Primary Prakriti is <b>${primary}</b> and Secondary is <b>${secondary}</b>.<br>
+         Weighted Scores → Vata: ${scores.Vata}, Pitta: ${scores.Pitta}, Kapha: ${scores.Kapha}</div>`;
+    }
+  </script>
+</body>
+</html>
